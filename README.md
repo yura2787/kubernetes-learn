@@ -1,63 +1,65 @@
 # kubernetes-learn
 
-Навчальний репозиторій: маніфести, конспекти та скрипти для вивчення Kubernetes.
+A learning repository: manifests, notes and scripts for studying Kubernetes.
 
-## Структура
+## Structure
 
 ```
-manifests/       навчальні маніфести, згруповані по темах
-  01-pods/         Pod, ліміти, probes
+manifests/       learning manifests, grouped by topic
+  01-pods/         Pod, resource limits, probes
   02-deployments/  Deployment, ReplicaSet, rollout
   03-services/     Service (ClusterIP/NodePort/LoadBalancer)
   04-config/       ConfigMap, Secret, env
   05-storage/      PV, PVC, StorageClass
-  06-ingress/      Ingress, ingress-controller
-helm/            власні чарти та values-файли
-scripts/         допоміжні bash-скрипти (підняти/зняти кластер)
-docs/            конспекти та шпаргалки
+  06-ingress/      Ingress, ingress controller
+helm/            custom charts and values files
+scripts/         helper bash scripts (bring the cluster up/down)
+docs/            notes and cheat sheets
 ```
 
-## Що потрібно встановити
+## Prerequisites
 
 ```bash
 brew install kubectl kind helm k9s
 ```
 
-- `kubectl` — CLI для роботи з кластером
-- `kind` — локальний кластер у Docker (альтернатива: `minikube`)
-- `helm` — пакетний менеджер
-- `k9s` — TUI для перегляду кластера (необов'язково, але зручно)
+- `kubectl` — CLI for talking to the cluster
+- `kind` — local cluster running in Docker (alternative: `minikube`)
+- `helm` — package manager
+- `k9s` — TUI for browsing the cluster (optional, but handy)
 
-## Швидкий старт
+## Quick start
 
 ```bash
 ./scripts/cluster-up.sh
 ```
 
-Перевірити, що кластер живий:
+Check that the cluster is alive:
 
 ```bash
 kubectl get nodes
 ```
 
-Застосувати маніфести з теми:
+Apply the manifests for a topic:
 
 ```bash
 kubectl apply -f manifests/01-pods/
 ```
 
-Прибрати за собою:
+Clean up afterwards:
 
 ```bash
 ./scripts/cluster-down.sh
 ```
 
-## Конспекти
+## Notes
 
-- [Шпаргалка по kubectl](docs/cheatsheet.md)
+- [kubectl cheat sheet](docs/cheatsheet.md)
 
-## Правила репозиторію
+## Repository conventions
 
-- Секрети в git **не комітяться**. Для прикладів використовуй файли з суфіксом
-  `.example.yaml` — вони дозволені в `.gitignore`, реальні `*secret*.yaml` — ні.
-- Кожна тема — окрема тека в `manifests/`, файли нумеруються за порядком застосування.
+- Secrets are **never** committed. For examples use files with the
+  `.example.yaml` suffix — those are allowed by `.gitignore`, while real
+  `*secret*.yaml` files are not.
+- Each topic gets its own directory under `manifests/`, with files numbered in
+  the order they should be applied.
